@@ -16,7 +16,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 Malaterre, Christophe., and Francis Lareau (in press). 
 ## Authors
 ### Christophe Malaterre
-- Email: x@y.z
+- Email: malaterre.christophe@uqam.ca
 ### Francis Lareau
 - Email: francislareau@hotmail.com
 ## Acknowledgments
