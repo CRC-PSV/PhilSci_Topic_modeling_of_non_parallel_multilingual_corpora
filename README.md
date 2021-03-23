@@ -8,7 +8,7 @@ This code was tested on Python 3.7.4. Other requirements are as follows:
 - sklearn
 - numpy
 - pandas
-(See requirements.txt)
+- (See requirements.txt)
 ## Quick Start
 1. Install Libraries: pip install -r requirements.txt
 2. X
