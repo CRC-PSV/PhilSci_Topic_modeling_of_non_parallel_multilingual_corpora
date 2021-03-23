@@ -14,7 +14,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 2. X
 ## Citation
 Malaterre, Christophe., and Francis Lareau (in press). 
-## Author
+## Authors
 ### Christophe Malaterre
 - Email: x@y.z
 ### Francis Lareau
