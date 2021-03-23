@@ -12,7 +12,7 @@ This code was tested on Python 3.7.4. Other requirements are as follows:
 Malaterre, Christophe., and Francis Lareau (in press). 
 ## Author
 Christophe Malaterre
-- Email: 
+- Email: x@y.z
 Francis Lareau
 - Email: francislareau@hotmail.com
 ## Acknowledgments
