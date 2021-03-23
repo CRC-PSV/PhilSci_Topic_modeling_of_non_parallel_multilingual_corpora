@@ -11,6 +11,8 @@ This code was tested on Python 3.7.4. Other requirements are as follows:
 ## Citation
 Malaterre, Christophe., and Francis Lareau (in press). 
 ## Author
+Christophe Malaterre
+- Email: 
 Francis Lareau
 - Email: francislareau@hotmail.com
 ## Acknowledgments
