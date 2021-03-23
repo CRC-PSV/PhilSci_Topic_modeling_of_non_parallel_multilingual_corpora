@@ -11,9 +11,9 @@ This code was tested on Python 3.7.4. Other requirements are as follows:
 ## Citation
 Malaterre, Christophe., and Francis Lareau (in press). 
 ## Author
-Christophe Malaterre
+### Christophe Malaterre
 - Email: x@y.z
-Francis Lareau
+### Francis Lareau
 - Email: francislareau@hotmail.com
 ## Acknowledgments
 The authors are grateful to JSTOR, Elsevier, Oxford University Press, Springer, Taylor and Francis, and University of Chicago Press for providing access to journal articles for text-mining purposes. Special thanks are due to Pedro Peres-Neto for providing guidance with matrix similarity measures, to Sari Lemable and Frédérick Deschênes respectively for Dutch and German translation checks, and to Rens Strijbos for insights about W. M. Kruseman. The authors also thank the audiences of a 2020 TEC seminar at UQAM and of the DS2-2021 conference for comments on an earlier version of the manuscript. C.M. acknowledges funding from Canada Foundation for Innovation (Grant 34555) and Canada Research Chairs (CRC-950-230795). F.L. acknowledges funding from the Fonds de recherche du Québec - Société et culture (FRQSC-276470).
