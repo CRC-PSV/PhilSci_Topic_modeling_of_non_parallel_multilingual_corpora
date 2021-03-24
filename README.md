@@ -24,22 +24,22 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 ## Quick Start
 - Install libraries: pip install -r requirements.txt
 ### 1. Langage detection and machine translation\*
-- Execute code : Langage_detection_and_machine_translation.py
+- Execute code to replicate research : Langage_detection_and_machine_translation.py
 ### 2. Inspection
 #### 2.1 Rule-based inspection\*
-- Execute code : Rule-based inspection.Rmd
+- Execute code to replicate research : Rule-based inspection.Rmd
 #### 2.2 Manual inspection
 ### 3. Topology preservation test
-- Execute code : Topology_preservation_test.Rmd
+- Execute code to replicate research : Topology_preservation_test.Rmd
 ### 4. Preprocessing and topic modeling
 #### 4.1 Preprocessing\*
 - Code not included
 #### 4.2 Topic modeling
-- Execute code : Topic_modeling.py
+- Execute code to replicate research : Topic_modeling.py
 ### 5. Comparaison with previous topic-model
-- Execute code : Comparisons with previous topic modeling.py
+- Execute code to replicate research : Comparisons with previous topic modeling.py
 ### 6. Diachronic and journal analyses
-- Execute code : Diachronic_and_journal_analyses.py
+- Execute code to replicate research : Diachronic_and_journal_analyses.py
 ### 7. Futher comparisons with previous topic-model
 \*Note that for legal issues, the complete full-text of journal articles could not be included with the dataset (but can be retrieved by asking JSTOR and the respective publishers).
 ## Citation
