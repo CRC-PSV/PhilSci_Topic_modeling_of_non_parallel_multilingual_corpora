@@ -33,7 +33,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 - Execute to replicate research : Topology_preservation_test.Rmd
 ### 4. Preprocessing and topic modeling
 #### 4.1 Preprocessing\*
-- Code not included
+- Execute to replicate research : Preprocessing.py
 #### 4.2 Topic modeling
 - Execute to replicate research : Topic_modeling.py
 ### 5. Comparaison with previous topic-model
