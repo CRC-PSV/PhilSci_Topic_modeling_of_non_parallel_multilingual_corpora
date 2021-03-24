@@ -38,7 +38,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 - Execute to replicate research : Preprocessing.py
 #### 4.2 Topic modeling
 - Execute to replicate research : Topic_modeling.py
-### 5. Comparaison with previous topic-model
+### 5. Comparison with previous topic-model
 - Execute to replicate research : Comparisons with previous topic modeling.py
 ### 6. Diachronic and journal analyses
 - Execute to replicate research : Diachronic_and_journal_analyses.py
