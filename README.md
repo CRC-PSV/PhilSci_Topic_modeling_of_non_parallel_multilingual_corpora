@@ -34,12 +34,14 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 - pandas
 - (See requirements.txt)
 ## Quick Start
-1. Langage detection and machine translation\*
+### 1. Langage detection and machine translation\*
 - Install libraries: pip install -r requirements.txt
-3. Inspection
-- Rule-based inspection
+- Execute code : Langage_detection_and_machine_translation.py
+### 2. Inspection
+- Rule-based inspection\*
+- Execute code : Rule-based inspection.Rmd
 - Manual inspection
-4. Topology preservation test
+### 3. Topology preservation test
 5. Preprocessing and topic modeling
 - Preprocessing
 - Topic modeling
@@ -49,7 +51,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 9. 
 10. X
 
-\*Note that for legal issues, the complete full-text of journal articles that are necessary to execute those code could not be included with the dataset (but can be retrieved by asking JSTOR and the respective publishers).
+\*Note that for legal issues, the complete full-text of journal articles that are necessary to execute this code could not be included with the dataset (but can be retrieved by asking JSTOR and the respective publishers).
 ## Citation
 Malaterre, Christophe., and Francis Lareau (draft). 
 ## Authors
