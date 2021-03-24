@@ -14,8 +14,10 @@ Topic model is a well proven tool to investigate the semantic content of textual
 6. Diachronic and journal analyses
 7. Futher comparisons with previous topic-model
 ## Requirements
-### Topology preservation test
+### R
 This code was tested on R Version 3.6.1. Other requirements are as follows:
+- text2vec
+- stringr
 - dplyr
 - xlsx
 - readr
@@ -23,7 +25,7 @@ This code was tested on R Version 3.6.1. Other requirements are as follows:
 - vegan
 - RSpectra
 - parallelDist
-### Topic model
+### Python
 This code was tested on Python 3.7.3. Other requirements are as follows:
 - lda
 - scipy
@@ -39,7 +41,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 1. Install libraries: pip install -r requirements.txt
 2. X
 ## Citation
-Malaterre, Christophe., and Francis Lareau (in press). 
+Malaterre, Christophe., and Francis Lareau (draft). 
 ## Authors
 ### Christophe Malaterre
 - Email: malaterre.christophe@uqam.ca
