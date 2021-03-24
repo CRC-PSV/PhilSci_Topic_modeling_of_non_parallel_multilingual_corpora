@@ -34,12 +34,22 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 - pandas
 - (See requirements.txt)
 ## Quick Start
-### Topology preservation test
-1. X
-2. Y
-### Topic model
-1. Install libraries: pip install -r requirements.txt
-2. X
+1. Langage detection and machine translation\*
+- Install libraries: pip install -r requirements.txt
+3. Inspection
+- Rule-based inspection
+- Manual inspection
+4. Topology preservation test
+5. Preprocessing and topic modeling
+- Preprocessing
+- Topic modeling
+6. Comparaison with previous topic-model
+7. Diachronic and journal analyses
+8. Futher comparisons with previous topic-model
+9. 
+10. X
+
+\*Note that for legal issues, the complete full-text of journal articles that are necessary to execute those code could not be included with the dataset (but can be retrieved by asking JSTOR and the respective publishers).
 ## Citation
 Malaterre, Christophe., and Francis Lareau (draft). 
 ## Authors
