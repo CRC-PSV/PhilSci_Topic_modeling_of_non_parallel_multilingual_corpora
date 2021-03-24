@@ -1,1 +1,2 @@
 # Rule-based inspection
+We measured the impact of machine translation on the presence of question marks has a mean of identifying OCR or encoding issues. In particular, we measured the number of question marks that were present at the beginning or inside words  (as in “?ventuellement” or in “fran?aise”) and at the end or outside words  (as in “entende? ment” or “ ? ”), both in the original texts and in their English translations, and also in English texts for reference.
