@@ -1,1 +1,2 @@
 # Topology preservation test
+With the document-term matrices of our sub-corpora in their original languages (Dutch, German, French) and the document-term matrices of their translations:, which were all reduced through a singular value decomposition, we then calculate the document-document distance by measuring the documents pairwise Euclidian distance. Finally, we assesse the similarity of the distance matrices for each language by calculating their Mantel coefficient , their Procrustres coefficient  and their RV coefficient.
