@@ -31,6 +31,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 #### 2.1 Rule-based inspection\*
 - Execute to replicate research : Rule-based inspection.Rmd
 #### 2.2 Manual inspection
+- Open the attached files to view the annotated sample texts for German, Dutch and French translations, as well as data counts per language: Google translate - Annotated sample texts.docx; Google translate - Synthesis.xlsx
 ### 3. Topology preservation test
 - Execute to replicate research : Topology_preservation_test.Rmd
 ### 4. Preprocessing and topic modeling
