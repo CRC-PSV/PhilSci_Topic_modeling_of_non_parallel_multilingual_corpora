@@ -1,0 +1,155 @@
+---
+title: "Rule-based inspection and data input for topology preservation test"
+author: "Francis Lareau"
+date: "21/03/2021"
+knit: (function(inputFile, encoding) {
+  output_dir <- "/Scripts_html";
+  if(!dir.exists(output_dir)) {dir.create(output_dir)};
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = output_dir) })
+output:
+  html_document:
+    number_sections: false
+    toc: yes
+    toc_float: true
+    theme: united
+    highlight: zenburn
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+   
+```{r 1 Librairies}
+
+if(!('text2vec' %in% rownames(installed.packages()))){install.packages('text2vec')}
+library(text2vec)
+
+if(!('dplyr' %in% rownames(installed.packages()))){install.packages('dplyr')}
+library(dplyr)
+
+if(!('xlsx' %in% rownames(installed.packages()))){install.packages('xlsx')}
+library(xlsx)
+
+if(!('readr' %in% rownames(installed.packages()))){install.packages('readr')}
+library(readr)
+
+if(!('stringr' %in% rownames(installed.packages()))){install.packages('stringr')}
+library(stringr)
+
+setwd("D:\\NLP\\projetjstor\\Consolidation\\Translation")
+
+```
+
+Note that for legal issues, the complete full-text of journal articles could not be included (but can be retrieved by asking JSTOR and the respective publishers).
+
+```{r 2 Import data}
+
+#1 Import original foreign and traducted data
+df <- read_csv(file = paste0(getwd(), "\\0. Data\\Private\\DataFrame_Consolidation_updated_notenglish.csv"))
+df <- as.data.frame(df)
+
+# Import original english data
+df_en <- read_csv(file = paste0(getwd(),"\\0. Data\\Private\\DataFrame_Consolidation_updated_v2_cleaned_v2.csv"))
+df_en <- as.data.frame(df_en)
+
+```
+
+In this rule-based inspection, we measured the impact of machine translation on the presence of question marks. In particular, we measured the number of question marks that were present at the beginning or inside words  (as in “?ventuellement” or in “fran?aise”) and at the end or outside words  (as in “entende? ment” or “ ? ”), both in the original texts and in their English translations, and also in English texts for reference.
+
+```{r 2.1 question mark stats from foreign}
+
+df$qm_total<-sapply(df[,'Article_original'], function(x) {str_count(x, pattern = "\\?+\\X")})
+df$qm_inside_w<-sapply(df[,'Article_original'], function(x) {str_count(x, pattern = "\\?+\\p{L}")})
+df$qm_outside_w<-sapply(df[,'Article_original'], function(x) {str_count(x, pattern = "\\?+[^\\p{L}\\?]")})
+
+df$qm_total_trad<-sapply(df[,'Article'], function(x) {str_count(x, pattern = "\\?+\\X")})
+df$qm_inside_w_trad<-sapply(df[,'Article'], function(x) {str_count(x, pattern = "\\?+\\p{L}")})
+df$qm_outside_w_trad<-sapply(df[,'Article'], function(x) {str_count(x, pattern = "\\?+[^\\p{L}\\?]")})
+
+In_translation <- c(sum(df$qm_inside_w_trad),sum(df$qm_outside_w_trad),sum(df$qm_total_trad),nrow(df))
+Average_in_translation <- In_translation/nrow(df)
+In_original <- c(sum(df$qm_inside_w),sum(df$qm_outside_w),sum(df$qm_total),nrow(df))
+Average_in_original <- In_original/nrow(df)
+Reduction <- 1-(In_translation/In_original)
+
+df_qm <- data.frame(In_translation, Average_in_translation, In_original, Average_in_original, Reduction,
+                    row.names = c('Inside words','Outside words','Total','Documents'))
+
+```
+
+```{r 2.2 question mark stats from english}
+
+df_en$qm_total<-sapply(df_en[,'Article'], function(x) {str_count(x, pattern = "\\?+\\X")})
+df_en$qm_inside_w<-sapply(df_en[,'Article'], function(x) {str_count(x, pattern = "\\?+\\p{L}")})
+df_en$qm_outside_w<-sapply(df_en[,'Article'], function(x) {str_count(x, pattern = "\\?+[^\\p{L}\\?]")})
+
+keep<-(df_en['Statut']=='OUI' & df_en['Year']!='2018' & df_en['Journal_title']!='Biology & Philosophy' & df_en['Journal_title']!= 'Studies in History and Philosophy of Science Part B: Studies in History and Philosophy of Modern Physics' & df_en['Journal_title']!= 'Studies in History and Philosophy of Science Part C: Studies in History and Philosophy of Biological and Biomedical Sciences' & df_en['Title']!='Der Begriff der Verständlichkeit in der modernen Physik (1948)')
+
+df_qm$English <- c(sum(df_en[keep,]$qm_inside_w),
+                   sum(df_en[keep,]$qm_outside_w),
+                   sum(df_en[keep,]$qm_total),
+                   sum(keep))
+df_qm$Moyenne_E <- df_qm$English/nrow(df_en[keep,])
+
+df_en[keep,][, sum(qm_outside_w), by = Year]
+aggregate(df_en[keep,qm_outside_w], by=df_en[keep,Year],sum)
+
+write.xlsx(df_qm, file = paste0(getwd(),"\\2. Inspection\\2.1 Rule-based inspection\\Results_of_rule-based_inspection.xlsx"), sheetName="Results", row.names=T)
+
+```
+
+Preparation of data document term matrix (DTM) for topology preservation test
+
+```{r 3 Sélection du type de n-gramme}
+
+#1 Créer un itérateur
+it1 <- itoken(df[['Article']], preprocess_function = tolower, tokenizer = word_tokenizer)
+it2 <- itoken(df[['Article_original']], preprocess_function = tolower, tokenizer = word_tokenizer)
+
+#2 Créer un vocabulaire
+vocab1 <- create_vocabulary(it1, ngram=c(ngram_min = 1, ngram_max = 1))
+vocab2 <- create_vocabulary(it2, ngram=c(ngram_min = 1, ngram_max = 1))
+
+```
+
+```{r 5 Vectorisation des domaines d\'information}
+
+#1 Créer une méthode de vectorisation
+vectorizer1 <- vocab_vectorizer(vocab1)
+vectorizer2 <- vocab_vectorizer(vocab2)
+
+#2 Créer une matrice d'occurrences DOMIFs x UNIFs
+dtm1 <- create_dtm(it1, vectorizer1, type = "dgCMatrix")
+dtm2 <- create_dtm(it2, vectorizer2, type = "dgCMatrix")
+
+bool.lang <- df$Lang_detect_1=='fr' & df$Lang_detect_2=='fr'   
+
+#isolation
+dtm1.lang <- dtm1[bool.lang,]
+dtm2.lang <- dtm2[bool.lang,]
+
+
+saveRDS(dtm1.lang, file = paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_translation_fr.rds"))
+saveRDS(dtm2.lang, file = paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_original_fr.rds"))
+
+bool.lang <- df$Lang_detect_1=='de' & df$Lang_detect_2=='de'
+
+#isolation
+dtm1.lang <- dtm1[bool.lang,]
+dtm2.lang <- dtm2[bool.lang,]
+
+saveRDS(dtm1.lang, file = paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_translation_de.rds"))
+saveRDS(dtm2.lang, file = paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_original_de.rds"))
+
+bool.lang <- df$Lang_detect_1=='nl' & df$Lang_detect_2=='nl'  
+
+#isolation
+dtm1.lang <- dtm1[bool.lang,]
+dtm2.lang <- dtm2[bool.lang,]
+
+saveRDS(dtm1.lang, file = paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_translation_nl.rds"))
+saveRDS(dtm2.lang, file = paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_original_nl.rds"))
+
+```
