@@ -26,14 +26,17 @@ treetagger_path = "C:\TreeTagger"
 # #################################################### Initialize project paths
 #==============================================================================
 
-main_path = os.path.join("D:\projetjstor\Consolidation\Translation")
+main_path = os.path.join("your_main_path")
 os.chdir(main_path)
 
 #==============================================================================
 # ################################################################# Import data
 #==============================================================================
 
-# import with pandas a dataframe structure
+# For legal issues, the complete full-text of journal articles could not be 
+# included with the dataset (but can be retrieved by asking JSTOR and the 
+# respective publishers).
+
 dataframe = pd.read_pickle(os.path.join(main_path,
                                         "0. Data",
                                         "Private",
@@ -177,21 +180,6 @@ for idx,row in dataframe.iterrows():
 # ############################################################### Save Metadata
 #==============================================================================
 
-#save cleaned dataframe structure to pkl
-#dataframe.to_pickle(os.path.join(main_path,
-#                                 "0. Data",
-#                                 "Private",
-#                                 "DataFrame_Consolidation_updated_v2_notenglish_cleaned_v2.pkl"))
-
-#save some info for later (general statistic)
-#dataframe[["Journal_id","Title", "Author", "Year","Volume","Issue","Page_range",
-#           "Article","Citation","Article_ID","Lang_detect_1","Lang_detect_2",
-#           "translated"]].to_pickle(
-#           os.path.join(main_path,
-#                        "0. Data",
-#                        "Private",
-#                        "DataFrame_Consolidation_updated_v2_notenglish_General_Stat_from_Tagged_v3.pkl"))
-
 dataframe[["Journal_id","Title", "Author", "Year","Volume","Issue","Page_range",
            "Citation","Article_ID","Lang_detect_1","Lang_detect_2",
            "translated"]].to_pickle(
@@ -202,11 +190,6 @@ dataframe[["Journal_id","Title", "Author", "Year","Volume","Issue","Page_range",
 #==============================================================================
 # ########################### Word tokenization, POS tagging, and lemmatization
 #==============================================================================
-
-#dataframe = pd.read_pickle(os.path.join(main_path,
-#                                        "0. Data",
-#                                        "Private",
-#                                        "DataFrame_Consolidation_updated_v2_notenglish_cleaned_v2_test.pkl"))
 
 tagger = treetaggerwrapper.TreeTagger(TAGLANG='en', TAGDIR=treetagger_path)
 dataframe['Lemma'] = ''
