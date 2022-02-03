@@ -34,6 +34,10 @@ os.chdir(main_path)
 # ################################################################# Import data
 #==============================================================================
 
+# For legal issues, the complete full-text of journal articles could not be 
+# included with the dataset (but can be retrieved by asking JSTOR and the 
+# respective publishers).
+
 DF = pd.read_pickle(
         os.path.join(main_path,
                      "0. Data",
@@ -83,7 +87,7 @@ DF.reset_index(inplace=True)
 
 ​#Google Translate API need an account and a key (https://cloud.google.com/)​
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\GoogleCloudKey_.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'your_path_to_credential'
 translateclient = translate.Client()
 
 DF['Lang_detect_3']=''
