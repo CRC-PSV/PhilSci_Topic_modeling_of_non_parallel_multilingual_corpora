@@ -21,7 +21,7 @@ import bz2
 # #################################################### Initialize project paths
 #==============================================================================
 
-main_path = os.path.join("D:\projetjstor\Consolidation\Translation") #where is input and output
+main_path = os.path.join("your_main_path")
 os.chdir(main_path)
 
 #==============================================================================
@@ -114,10 +114,7 @@ for idx,row in DF_Topic_TKW.iterrows():
 
 #==============================================================================
 # ############################################################# Topic by period
-#==============================================================================
-
-#DF_topic['Period']=DF_topic.Year.apply(lambda x: #2 years period
-#    x+'-'+str(int(x)+1) if int(x) % 2 == 0 else str(int(x)-1)+'-'+x)    
+#============================================================================== 
 
 DF_topic['Period']=DF_topic.Year.apply(lambda x: #4 years period
     str(int(x)-(int(x)+2)%4)+'-'+str((int(x)-(int(x)+2)%4)+3))
