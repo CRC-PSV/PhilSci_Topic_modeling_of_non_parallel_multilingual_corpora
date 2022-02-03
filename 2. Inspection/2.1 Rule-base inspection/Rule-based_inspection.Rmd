@@ -38,7 +38,7 @@ library(readr)
 if(!('stringr' %in% rownames(installed.packages()))){install.packages('stringr')}
 library(stringr)
 
-setwd("D:\\NLP\\projetjstor\\Consolidation\\Translation")
+setwd("your_main_path")
 
 ```
 
