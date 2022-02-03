@@ -11,7 +11,6 @@ This code was tested on R Version 3.6.1. Other requirements are as follows:
 - readr
 - FactoMineR
 - vegan
-- RSpectra
 - parallelDist
 ### Python
 This code was tested on Python 3.7.3. Other requirements are as follows:
