@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
    
 ```{r 1 Librairies}
 
-setwd("D:\\NLP\\projetjstor\\Consolidation\\Translation")
+setwd("your_main_path")
 
 if(!('dplyr' %in% rownames(installed.packages()))){install.packages('dplyr')}
 library(dplyr)
