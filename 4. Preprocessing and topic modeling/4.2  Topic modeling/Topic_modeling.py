@@ -21,7 +21,7 @@ import bz2
 # #################################################### Initialize project paths
 #==============================================================================
 
-main_path = os.path.join("D:\projetjstor\Consolidation\Translation")
+main_path = os.path.join("your_main_path")
 os.chdir(main_path)
 
 #==============================================================================
