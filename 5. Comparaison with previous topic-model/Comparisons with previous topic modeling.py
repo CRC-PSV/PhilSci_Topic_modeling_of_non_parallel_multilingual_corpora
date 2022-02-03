@@ -23,7 +23,7 @@ from gensim.matutils import hellinger
 # #################################################### Initialize project paths
 #==============================================================================
 
-main_path = os.path.join("D:\projetjstor\Consolidation\Translation") #where is input and output
+main_path = os.path.join("your_main_path")
 os.chdir(main_path)
 
 #==============================================================================
@@ -74,15 +74,6 @@ with open(os.path.join(main_path,
 #==============================================================================
 # ########################################################### Document x Topics
 #==============================================================================
-
-checklist = list()
-for i in range(len(DF_statistique_generale)):
-    if DF_statistique_generale.Citation[i] in [x for x in DF_statistique_generale_en.Citation]:
-        checklist.append(True)
-    else:
-        checklist.append(False)
-#test        
-[x for x in DF_statistique_generale.Citation[checklist]] == [x for x in DF_statistique_generale_en.Citation]
  
 DF_DT_euc = pd.DataFrame(columns=["Topic_t_" + str(i) for i in range(len(ldamodel_lda_en.components_))],
                        index=["Topic_" + str(i) for i in range(len(ldamodel_lda_en.components_))])
@@ -104,12 +95,6 @@ for topic_t in range(25):
         
 DF_DT_hel = pd.DataFrame(columns=["Topic_t_" + str(i) for i in range(len(ldamodel_lda_en.components_))],
                        index=["Topic_" + str(i) for i in range(len(ldamodel_lda_en.components_))])
-
-#for topic_t in range(25):
-#    for topic in range(25):
-#        dist = hellinger(ldamodel_lda.doc_topic_[checklist].transpose()[topic_t],
-#                                  ldamodel_lda_en.doc_topic_.transpose()[topic])
-#        DF_DT_hel['Topic_t_'+str(topic_t)][topic]=dist
         
 for topic_t in range(25):
     for topic in range(25):
@@ -133,23 +118,6 @@ for topic_t in range(25):
 word_list_en = sorted([i for i in Vocab_en.keys()])
 word_list = sorted([i for i in Vocab.keys()])
 
-checklist_w = list()
-for i in range(len(word_list_en)):
-    if word_list_en[i] in word_list:
-        checklist_w.append(True)
-    else:
-        checklist_w.append(False)
-
-checklist_w_t = list()
-for i in range(len(word_list)):
-    if word_list[i] in word_list_en:
-        checklist_w_t.append(True)
-    else:
-        checklist_w_t.append(False)
-#test        
-[x for x in np.array(word_list)[checklist_w_t]] == [x for x in np.array(word_list_en)[checklist_w]]
-
-
 DF_WT_euc = pd.DataFrame(columns=["Topic_t_" + str(i) for i in range(len(ldamodel_lda_en.components_))],
                        index=["Topic_" + str(i) for i in range(len(ldamodel_lda_en.components_))])
 
@@ -170,13 +138,7 @@ for topic_t in range(25):
         
 DF_WT_hel = pd.DataFrame(columns=["Topic_t_" + str(i) for i in range(len(ldamodel_lda_en.components_))],
                        index=["Topic_" + str(i) for i in range(len(ldamodel_lda_en.components_))])
-
-#for topic_t in range(25):
-#    for topic in range(25):
-#        dist = hellinger(ldamodel_lda.components_.transpose()[checklist_w_t,].transpose()[topic_t],
-#                                  ldamodel_lda_en.components_.transpose()[checklist_w].transpose()[topic])
-#        DF_WT_hel['Topic_t_'+str(topic_t)][topic]=dist
-        
+      
 for topic_t in range(25):
     for topic in range(25):
         dist = hellinger(ldamodel_lda.components_.transpose()[checklist_w_t,].transpose()[topic_t]/sum(ldamodel_lda.components_.transpose()[checklist_w_t,].transpose()[topic_t]),
