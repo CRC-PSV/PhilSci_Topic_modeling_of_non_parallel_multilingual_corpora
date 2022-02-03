@@ -1,0 +1,132 @@
+---
+title: "Topology preservation test"
+author: "Francis Lareau"
+date: "21/03/2021"
+knit: (function(inputFile, encoding) {
+  output_dir <- "/Scripts_html";
+  if(!dir.exists(output_dir)) {dir.create(output_dir)};
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = output_dir) })
+output:
+  html_document:
+    number_sections: false
+    toc: yes
+    toc_float: true
+    theme: united
+    highlight: zenburn
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+   
+```{r 1 Librairies}
+
+setwd("D:\\NLP\\projetjstor\\Consolidation\\Translation")
+
+if(!('dplyr' %in% rownames(installed.packages()))){install.packages('dplyr')}
+library(dplyr)
+
+if(!('xlsx' %in% rownames(installed.packages()))){install.packages('xlsx')}
+library(xlsx)
+
+if(!('readr' %in% rownames(installed.packages()))){install.packages('readr')}
+library(readr)
+
+if(!('FactoMineR' %in% rownames(installed.packages()))){install.packages('FactoMineR')}
+
+if(!('vegan' %in% rownames(installed.packages()))){install.packages('vegan')}
+
+if(!('parallelDist'%in% rownames(installed.packages()))){install.packages('parallelDist')}
+
+if(!('stats'%in% rownames(installed.packages()))){install.packages('stats')}
+
+#Function of the topology preservation test
+TPT_test <- function(DTM1,DTM2) {
+  require(parallelDist)
+  require(stats)
+  require(vegan)
+  require(FactoMineR)
+  #Compute DDM (distance)
+  DDM1_cos <- parallelDist::parDist(as.matrix(DTM1), method = "cosine", threads = 16) 
+  DDM2_cos <- parallelDist::parDist(as.matrix(DTM2), method = "cosine", threads = 16) 
+  DDM1_euc <- parallelDist::parDist(as.matrix(DTM1), method = "euclidean", threads = 16)
+  DDM2_euc <- parallelDist::parDist(as.matrix(DTM2), method = "euclidean", threads = 16)
+  #Compute PCA
+  DTM1_pca <- stats::prcomp(DTM1)
+  DTM2_pca <- stats::prcomp(DTM2)
+  #Mantel test on Cosine distance
+  Mantel_result <- vegan::mantel(DDM1_cos,DDM2_cos, method = 'pearson')
+  #RV test on Euclidienne distance
+  RV_result <- FactoMineR::coeffRV(as.matrix(DDM1_euc),as.matrix(DDM2_euc))
+  #Procrustes test on PCA
+  Procrustes_result <- vegan::protest(DTM1_pca,DTM2_pca)
+  return(list('mantel'=Mantel_result,'rv'=RV_result,'pc'=Procrustes_result))
+}
+
+```
+
+```{r 2 Topology preservation test for FR}
+
+#RDS encoded DTM import
+DTM_trad_fr <- readRDS(paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_translation_fr.rds"))
+DTM_orig_fr <- readRDS(paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_original_fr.rds"))
+
+TPT_test_fr <- TPT_test(DTM_trad_fr,DTM_orig_fr)
+
+```
+
+```{r 3 Topology preservation test for DE}
+
+#RDS encoded DTM import
+DTM_trad_de <- readRDS(paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_translation_de.rds"))
+DTM_orig_de <- readRDS(paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_original_de.rds"))
+
+TPT_test_de <- TPT_test(DTM_trad_de,DTM_orig_de)
+
+```
+
+```{r 4 Topology preservation test for NL}
+
+#RDS encoded DTM import
+DTM_trad_nl <- readRDS(paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_translation_nl.rds"))
+DTM_orig_nl <- readRDS(paste0(getwd(),"\\0. Data\\DTM_philosophy_of_science_original_nl.rds"))
+
+TPT_test_nl <- TPT_test(DTM_trad_nl,DTM_orig_nl)
+
+```
+
+```{r 5 Results export}
+
+DF_result <- data.frame(c(nrow(DTM_trad_nl),
+                          sum(Matrix::colSums(DTM_orig_nl)!=0),
+                          sum(Matrix::colSums(DTM_trad_nl)!=0),
+                          TPT_test_nl$mantel$statistic,
+                          TPT_test_nl$rv$rv,
+                          TPT_test_nl$pc$scale),
+                        c(nrow(DTM_trad_de),
+                          sum(Matrix::colSums(DTM_orig_de)!=0),
+                          sum(Matrix::colSums(DTM_trad_de)!=0),
+                          TPT_test_de$mantel$statistic,
+                          TPT_test_de$rv$rv,
+                          TPT_test_de$pc$scale),
+                        c(nrow(DTM_trad_fr),
+                          sum(Matrix::colSums(DTM_orig_fr)!=0),
+                          sum(Matrix::colSums(DTM_trad_fr)!=0),
+                          TPT_test_fr$mantel$statistic,
+                          TPT_test_fr$rv$rv,
+                          TPT_test_fr$pc$scale),
+                        row.names = c('Number of articles N(l)',
+                                      'Number of termes in the original lexicon M(l)',
+                                      'Number of termes in the translated lexicon M*(l)',
+                                      'Mantel r on cosine distance',
+                                      'RV coefficient on Euclidean distance',
+                                      'Procrustes correlation on PCA'))
+
+colnames(DF_result) <- c('Dutch', 'German','French')
+
+write.xlsx(DF_result, file = paste0(getwd(),"\\3. Topology preservation test\\Results_of_topology_preservation_test.xlsx"), sheetName="Results", row.names=T)
+
+```
+
