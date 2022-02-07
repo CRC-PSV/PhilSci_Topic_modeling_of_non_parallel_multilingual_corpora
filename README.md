@@ -51,7 +51,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 ### 7. Futher comparisons with previous topic-model
 \*Note that for legal issues, the complete full-text of journal articles could not be included with the dataset (but can be retrieved by asking JSTOR and the respective publishers).
 ## Citation
-Malaterre, Christophe., and Francis Lareau (draft). 
+Malaterre, Christophe., and Francis Lareau. 2022. "The early days of contemporary philosophy of science: Novel insights from machine translation and topic-modeling of non-parallel multilingual corpora". *Synthese*.
 ## Authors
 ### Christophe Malaterre
 - Email: malaterre.christophe@uqam.ca
