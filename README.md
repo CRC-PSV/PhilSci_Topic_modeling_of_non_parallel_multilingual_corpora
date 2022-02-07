@@ -13,7 +13,7 @@ This code was tested on R Version 3.6.1. Other requirements are as follows:
 - vegan
 - parallelDist
 ### Python
-This code was tested on Python 3.7.3. Other requirements are as follows:
+This code was tested on Python 3.7.3. Other requirements are as follows (see requirements.txt):
 - lda
 - scipy
 - sklearn
@@ -26,7 +26,6 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 - langid
 - spacy
 - treetaggerwrapper
-- (See requirements.txt)
 ## Quick Start
 - Install libraries: pip install -r requirements.txt
 - Install TreeTagger
