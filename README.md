@@ -20,6 +20,12 @@ This code was tested on Python 3.7.3. Other requirements are as follows:
 - treetaggerwrapper
 - numpy
 - pandas
+- gensim==3.8.1
+- google-cloud-translate
+- langdetect
+- langid
+- spacy
+- treetaggerwrapper
 - (See requirements.txt)
 ## Quick Start
 - Install libraries: pip install -r requirements.txt
