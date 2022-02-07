@@ -42,7 +42,7 @@ if(!('parallelDist'%in% rownames(installed.packages()))){install.packages('paral
 
 if(!('stats'%in% rownames(installed.packages()))){install.packages('stats')}
 
-#Function of the topology preservation test
+#Function for the topology preservation test
 TPT_test <- function(DTM1,DTM2) {
   require(parallelDist)
   require(stats)
@@ -57,12 +57,16 @@ TPT_test <- function(DTM1,DTM2) {
   DTM1_pca <- stats::prcomp(DTM1)
   DTM2_pca <- stats::prcomp(DTM2)
   #Mantel test on Cosine distance
-  Mantel_result <- vegan::mantel(DDM1_cos,DDM2_cos, method = 'pearson')
-  #RV test on Euclidienne distance
-  RV_result <- FactoMineR::coeffRV(as.matrix(DDM1_euc),as.matrix(DDM2_euc))
+  Mantel_cos <- vegan::mantel(DDM1_cos,DDM2_cos, method = 'pearson')
+  #Mantel test on Euclidian distance
+  Mantel_euc <- vegan::mantel(DDM1_euc,DDM2_euc, method = 'pearson')
+  #RV test on cosine distance
+  RV_cos <- FactoMineR::coeffRV(as.matrix(DDM1_cos),as.matrix(DDM2_cos))
+  #RV test on Euclidian distance
+  RV_euc <- FactoMineR::coeffRV(as.matrix(DDM1_euc),as.matrix(DDM2_euc))
   #Procrustes test on PCA
   Procrustes_result <- vegan::protest(DTM1_pca,DTM2_pca)
-  return(list('mantel'=Mantel_result,'rv'=RV_result,'pc'=Procrustes_result))
+  return(list('mantel_cos'=Mantel_cos,'mantel_euc'=Mantel_euc,'rv_cos'=RV_cos,'rv_euc'=RV_euc,'pc'=Procrustes_result))
 }
 
 ```
@@ -102,27 +106,55 @@ TPT_test_nl <- TPT_test(DTM_trad_nl,DTM_orig_nl)
 DF_result <- data.frame(c(nrow(DTM_trad_nl),
                           sum(Matrix::colSums(DTM_orig_nl)!=0),
                           sum(Matrix::colSums(DTM_trad_nl)!=0),
-                          TPT_test_nl$mantel$statistic,
-                          TPT_test_nl$rv$rv,
-                          TPT_test_nl$pc$scale),
+                          TPT_test_nl$mantel_cos$statistic,
+                          TPT_test_nl$mantel_cos$signif,
+                          TPT_test_nl$mantel_euc$statistic,
+                          TPT_test_nl$mantel_euc$signif,
+                          TPT_test_nl$rv_cos$rv,
+                          TPT_test_nl$rv_cos$p.value,
+                          TPT_test_nl$rv_euc$rv,
+                          TPT_test_nl$rv_euc$p.value,
+                          TPT_test_nl$pc$scale,
+                          TPT_test_nl$pc$signif),
                         c(nrow(DTM_trad_de),
                           sum(Matrix::colSums(DTM_orig_de)!=0),
                           sum(Matrix::colSums(DTM_trad_de)!=0),
-                          TPT_test_de$mantel$statistic,
-                          TPT_test_de$rv$rv,
-                          TPT_test_de$pc$scale),
+                          TPT_test_de$mantel_cos$statistic,
+                          TPT_test_de$mantel_cos$signif,
+                          TPT_test_de$mantel_euc$statistic,
+                          TPT_test_de$mantel_euc$signif,
+                          TPT_test_de$rv_cos$rv,
+                          TPT_test_de$rv_cos$p.value,
+                          TPT_test_de$rv_euc$rv,
+                          TPT_test_de$rv_euc$p.value,
+                          TPT_test_de$pc$scale,
+                          TPT_test_de$pc$signif),
                         c(nrow(DTM_trad_fr),
                           sum(Matrix::colSums(DTM_orig_fr)!=0),
                           sum(Matrix::colSums(DTM_trad_fr)!=0),
-                          TPT_test_fr$mantel$statistic,
-                          TPT_test_fr$rv$rv,
-                          TPT_test_fr$pc$scale),
+                          TPT_test_fr$mantel_cos$statistic,
+                          TPT_test_fr$mantel_cos$signif,
+                          TPT_test_fr$mantel_euc$statistic,
+                          TPT_test_fr$mantel_euc$signif,
+                          TPT_test_fr$rv_cos$rv,
+                          TPT_test_fr$rv_cos$p.value,
+                          TPT_test_fr$rv_euc$rv,
+                          TPT_test_fr$rv_euc$p.value,
+                          TPT_test_fr$pc$scale,
+                          TPT_test_fr$pc$signif),
                         row.names = c('Number of articles N(l)',
                                       'Number of termes in the original lexicon M(l)',
                                       'Number of termes in the translated lexicon M*(l)',
                                       'Mantel r on cosine distance',
+                                      'Mantel r significance on cosine distance',
+                                      'Mantel r on Euclidian distance',
+                                      'Mantel r significance on Euclidian distance',
+                                      'RV coefficient on cosine distance',
+                                      'RV coefficient significance on cosine distance',
                                       'RV coefficient on Euclidean distance',
-                                      'Procrustes correlation on PCA'))
+                                      'RV coefficient significance on Euclidean distance',
+                                      'Procrustes correlation on PCA',
+                                      'Procrustes correlation significance on PCA'))
 
 colnames(DF_result) <- c('Dutch', 'German','French')
 
