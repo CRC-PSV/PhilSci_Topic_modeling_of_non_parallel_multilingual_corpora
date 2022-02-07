@@ -56,7 +56,7 @@ TPT_test <- function(DTM1,DTM2) {
   #Compute PCA
   DTM1_pca <- stats::prcomp(DTM1)
   DTM2_pca <- stats::prcomp(DTM2)
-  #Mantel test on Cosine distance
+  #Mantel test on cosine distance
   Mantel_cos <- vegan::mantel(DDM1_cos,DDM2_cos, method = 'pearson')
   #Mantel test on Euclidian distance
   Mantel_euc <- vegan::mantel(DDM1_euc,DDM2_euc, method = 'pearson')
