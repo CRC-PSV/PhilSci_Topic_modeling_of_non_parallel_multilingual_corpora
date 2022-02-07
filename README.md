@@ -20,7 +20,7 @@ This code was tested on Python 3.7.3. Other requirements are as follows (see req
 - treetaggerwrapper
 - numpy
 - pandas
-- gensim==3.8.1
+- gensim
 - google-cloud-translate
 - langdetect
 - langid
