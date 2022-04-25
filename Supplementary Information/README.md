@@ -1,1 +1,1 @@
-
+This file includes all the data for the graphs as found in the publication: Malaterre, Christophe, and Francis Lareau. 2022. "The early days of contemporary philosophy of science: Novel insights from machine translation and topic-modeling of non-parallel multilingual corpora". <i>Synthese</i>.
